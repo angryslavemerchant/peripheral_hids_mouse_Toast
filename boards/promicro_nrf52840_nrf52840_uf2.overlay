@@ -1,0 +1,40 @@
+/* Your existing I2C config stays the same */
+&pinctrl {
+    i2c0_default: i2c0_default {
+        group1 {
+            psels = <NRF_PSEL(TWIM_SDA, 0, 17)>,
+                    <NRF_PSEL(TWIM_SCL, 0, 20)>;
+        };
+    };
+
+    i2c0_sleep: i2c0_sleep {
+        group1 {
+            psels = <NRF_PSEL(TWIM_SDA, 0, 17)>,
+                    <NRF_PSEL(TWIM_SCL, 0, 20)>;
+            low-power-enable;
+        };
+    };
+};
+
+&i2c0 {
+    compatible = "nordic,nrf-twim";
+    status = "okay";
+    clock-frequency = <I2C_BITRATE_FAST>;
+    pinctrl-0 = <&i2c0_default>;
+    pinctrl-1 = <&i2c0_sleep>;
+    pinctrl-names = "default", "sleep";
+};
+
+/* Remove the SoftDevice partition and fix the code partition offset */
+/delete-node/ &reserved_partition_0;
+
+&code_partition {
+    reg = <0x1000 0xEB000>;  /* Start at 0x1000 instead of 0x26000 */
+};
+
+/ {
+    chosen {
+        zephyr,code-partition = &code_partition;
+        zephyr,settings-partition = &storage_partition;
+    };
+};
