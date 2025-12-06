@@ -30,7 +30,7 @@ static const char *device_name;
 static size_t device_name_len;
 
 /* Unpair button configuration */
-#define UNPAIR_BUTTON_PIN 9
+#define UNPAIR_BUTTON_PIN 10
 static const struct device *button_dev;
 static struct gpio_callback button_cb_data;
 static struct k_work unpair_work;

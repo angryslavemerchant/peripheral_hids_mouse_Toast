@@ -29,25 +29,13 @@ int encoder_read_delta_0(int32_t *delta);
 int encoder_read_delta_1(int32_t *delta);
 
 /**
- * @brief Read combined offset from both encoders
+ * @brief Read combined delta from both encoders
  * 
- * Returns sum of both encoder offsets from their reference positions
+ * For backwards compatibility - returns sum of both encoder deltas
  * 
- * @param delta Pointer to store combined offset value
+ * @param delta Pointer to store combined delta value
  * @return 0 on success, negative errno on failure
  */
 int encoder_read_delta(int32_t *delta);
-
-/**
- * @brief Reset encoder 0 reference to current position
- * @return 0 on success, negative errno on failure
- */
-int encoder_reset_reference_0(void);
-
-/**
- * @brief Reset encoder 1 reference to current position
- * @return 0 on success, negative errno on failure
- */
-int encoder_reset_reference_1(void);
 
 #endif /* ENCODER_H */
